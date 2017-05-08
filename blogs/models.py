@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -10,3 +11,15 @@ class Blog(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class Post(models.Model):
+    blog = models.ForeignKey(Blog, related_name="posts")
+    title = models.CharField(max_length=200)
+    introduction = models.TextField(max_length=350)
+    body = models.TextField()
+    media_url = models.URLField(blank=True, null=True)
+    published_date = models.DateTimeField(default=timezone.now)
+
+    def __unicode__(self):
+        return self.title
