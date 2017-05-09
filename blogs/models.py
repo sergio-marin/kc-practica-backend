@@ -9,7 +9,7 @@ class Blog(models.Model):
     description = models.CharField(max_length=350, null=True, blank=True, default="")
     creation_date = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -21,5 +21,5 @@ class Post(models.Model):
     media_url = models.URLField(blank=True, null=True)
     published_date = models.DateTimeField(default=timezone.now)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
