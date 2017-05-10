@@ -27,13 +27,13 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.RenameField(
-            model_name='blog',
+            model_name='blogs',
             old_name='owner',
             new_name='blogger',
         ),
         migrations.AddField(
             model_name='post',
-            name='blog',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posts', to='blogs.Blog'),
+            name='blogs',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='blogs', to='blogs.Blog'),
         ),
     ]

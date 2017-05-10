@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=100)),
                 ('description', models.CharField(blank=True, default='', max_length=350, null=True)),
                 ('creation_date', models.DateTimeField(auto_now_add=True)),
-                ('owner', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='blog', to=settings.AUTH_USER_MODEL)),
+                ('owner', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='blogs', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

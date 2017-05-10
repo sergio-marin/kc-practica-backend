@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Blog(models.Model):
-    blogger = models.OneToOneField(User, related_name="blog")
+    blogger = models.OneToOneField(User, related_name="blogs")
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=350, null=True, blank=True, default="")
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -14,7 +14,7 @@ class Blog(models.Model):
 
 
 class Post(models.Model):
-    blog = models.ForeignKey(Blog, related_name="posts")
+    blog = models.ForeignKey(Blog, related_name="blogs")
     title = models.CharField(max_length=200)
     introduction = models.TextField(max_length=350)
     body = models.TextField()
