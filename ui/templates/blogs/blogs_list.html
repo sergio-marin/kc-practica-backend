@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block section %}
+    <div class="page-header">
+      <h1>Blogs List</h1>
+    </div>
+
+    {% for blog in blog_objects %}
+        <h2>{{ blog.name }}</h2>
+    {% endfor %}
+{% endblock %}
