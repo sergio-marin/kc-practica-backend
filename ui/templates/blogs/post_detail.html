@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block section %}
+    <div class="page-header">
+        <h1>{{ post_object.title }}</h1>
+        <h2>{{ post_object.introduction }}</h2>
+        <p>{{ post_object.body }}</p>
+        <p>{{ post_object.media_url }}</p>
+        <p>{{ post_object.published_date }}</p>
+    </div>
+{% endblock %}

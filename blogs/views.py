@@ -65,3 +65,25 @@ def blog_detail(request, blogger_name):
 
     # renderizar plantilla
     return render(request, 'blogs/blog_detail.html', context)
+
+
+def post_detail(request, blogger_name, post_pk):
+    """
+    Recupera un post de BD y lo pinta
+    :param request: HttpRequest
+    :param post_pk: La pk del post a visualizar
+    :return: HttpResponse
+    """
+    # recuperar el post
+    try:
+        post = Post.objects.get(pk=post_pk)
+    except Post.DoesNotExist:
+        return render(request, '404.html', {}, status=404)
+
+    # preparar el contexto
+    context = {
+            'post_object': post
+        }
+
+    # renderizar plantilla
+    return render(request, 'blogs/post_detail.html', context)
