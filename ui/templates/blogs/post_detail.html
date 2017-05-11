@@ -5,6 +5,7 @@
         <h2>{{ post_object.introduction }}</h2>
         <p>{{ post_object.body }}</p>
         <p>{{ post_object.media_url }}</p>
+        <p>{{ post_object.categories.all|join:", " }}</p>
         <p>{{ post_object.published_date }}</p>
     </div>
 {% endblock %}
