@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from blogs.views import posts_list, blogs_list
+from blogs.views import posts_list, blogs_list, blog_detail
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -23,4 +23,5 @@ urlpatterns = [
     # Posts URLs
     url(r'^$', posts_list),
     url(r'^blogs/?$', blogs_list),
+    url(r'^blogs/(?P<blogger_name>[a-zA-Z0-9_]+)/?$', blog_detail),
 ]
