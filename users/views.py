@@ -1,3 +1,42 @@
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login as django_login
+from django.shortcuts import render, redirect
+from django.views import View
 
-# Create your views here.
+from users.forms import LoginForm
+
+
+class LoginView(View):
+
+    def get(self, request):
+        """
+        Muestra el formulario de login
+        :param request:  HttpRequest
+        :return: HttpResponse
+        """
+        context = {
+            'form': LoginForm()
+        }
+        return render(request, 'users/login.html', context)
+
+    def post(self, request):
+        """
+        Hace login de un usuario
+        :param request:  HttpRequest
+        :return: HttpResponse
+        """
+        form = LoginForm(request.POST)
+        context = dict()
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                # usuario autenticado
+                django_login(request, user)
+                url = request.GET.get('next', 'posts_list')
+                return redirect(url)
+            else:
+                # usuario no autenticado
+                context["error"] = "Wrong username or password."
+        context["form"] = form
+        return render(request, 'users/login.html', context)
