@@ -16,18 +16,19 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from blogs.views import posts_list, blogs_list, blog_detail, post_detail, NewPostView
-from users.views import LoginView
+from users.views import LoginView, logout
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     # Posts URLs
     url(r'^$', posts_list, name="posts_list"),
-    url(r'^blogs/?$', blogs_list),
-    url(r'^blogs/(?P<blogger_name>[a-zA-Z0-9_]+)/?$', blog_detail),
+    url(r'^blogs/?$', blogs_list, name="blogs_list"),
+    url(r'^blogs/(?P<blogger_name>[a-zA-Z0-9_]+)/?$', blog_detail, name="blog_detail"),
     url(r'^blogs/(?P<blogger_name>[a-zA-Z0-9_]+)/(?P<post_pk>[0-9]+)/?$', post_detail, name="post_detail"),
     url(r'^new-post/?$', NewPostView.as_view(), name="new_post"),
 
     # Users URLs
     url(r'^login$', LoginView.as_view(), name="login"),
+    url(r'^logout$', logout, name="logout"),
 ]
