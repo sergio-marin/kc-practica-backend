@@ -1,6 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.urls import reverse
+from django.utils.decorators import method_decorator
+from django.views import View
 
+from blogs.forms import NewPostForm
 from blogs.models import Post, Blog
 
 
@@ -11,7 +16,7 @@ def posts_list(request):
     :return: HttpResponse
     """
     # recuperar todos los posts de la bd
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-published_date')
 
     # devolver la respuesta
     context = {
@@ -87,3 +92,51 @@ def post_detail(request, blogger_name, post_pk):
 
     # renderizar plantilla
     return render(request, 'blogs/post_detail.html', context)
+
+
+class NewPostView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        # crear el formulario
+        form = NewPostForm()
+
+        # renderiza la plantilla con el formulario
+        context = {
+            "form": form
+        }
+        return render(request, 'blogs/new_post.html', context)
+
+    @method_decorator(login_required)
+    def post(self, request):
+        """
+        Formulario para publicar post, se debe estar validado
+        :param request: HttpRequest
+        :return: HttpResponse
+        """
+        # crear el formulario con los datos del POST
+        blog = Blog.objects.filter(blogger=request.user).get()
+        post_with_blog = Post(blog=blog)
+        form = NewPostForm(request.POST, instance=post_with_blog)
+
+        # validar el formulario
+        if form.is_valid():
+            # crear la tarea
+            post = form.save()
+
+            # mostrar mensaje de éxito
+            message = 'Your post has been published! <a href="{0}">View Post</a>'.format(
+                reverse('post_detail', args=[request.user.username, post.pk])  # genera la URL de detalle de este post
+            )
+
+            # limpiamos el formulario creando uno nuevo vacío para pasar a la plantilla
+            form = NewPostForm()
+        else:
+            # mostrar mensaje de error
+            message = "An error ocurred!"
+
+        # renderizar la plantilla
+        context = {
+            "form": form,
+            "message": message
+        }
+        return render(request, 'blogs/new_post.html', context)
