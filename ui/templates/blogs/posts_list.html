@@ -5,9 +5,9 @@
             <img class="img-responsive" src="{{ post.media_url }}" alt="{{ post.title }}">
         </div>
         <div class="col-xs-12 col-md-8 col-sm-9">
-        {% else %}
-            <div class="col-xs-12">
-        {% endif %}
+    {% else %}
+        <div class="col-xs-12">
+    {% endif %}
         <div>
             <h2>{{ post.title }}</h2>
             <p>{{ post.introduction }}</p>

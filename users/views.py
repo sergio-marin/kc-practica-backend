@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
 
-from users.forms import LoginForm
+from users.forms import LoginForm, SignupForm
 
 
 class LoginView(View):
@@ -50,3 +51,44 @@ def logout(request):
     """
     django_logout(request)
     return redirect('login')
+
+
+class SignupView(View):
+
+    def get(self, request):
+        """
+        Muestra el formulario de registro
+        :param request:  HttpRequest
+        :return: HttpResponse
+        """
+        context = {
+            'form': SignupForm()
+        }
+        return render(request, 'users/signup.html', context)
+
+    def post(self, request):
+        """
+        Crea el nuevo usuario en BD
+        :param request:  HttpRequest
+        :return: HttpResponse
+        """
+        # crear el formulario con los datos del POST
+        form = SignupForm(request.POST)
+
+        # validar el formulario
+        if form.is_valid():
+            # crear el usuario
+            form.save()
+
+            # enviar a página de bienvenida
+            return render(request, 'users/signup_succes.html')
+        else:
+            # mostrar mensaje de error
+            message = "An error ocurred! Please try again later."
+
+            # renderizar la plantilla
+            context = {
+                "form": form,
+                "message": message
+            }
+            return render(request, 'users/signup.html', context)

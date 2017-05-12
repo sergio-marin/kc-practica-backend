@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from blogs.views import posts_list, blogs_list, blog_detail, post_detail, NewPostView
-from users.views import LoginView, logout
+from users.views import LoginView, logout, SignupView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -31,4 +31,5 @@ urlpatterns = [
     # Users URLs
     url(r'^login$', LoginView.as_view(), name="login"),
     url(r'^logout$', logout, name="logout"),
+    url(r'^signup/?$', SignupView.as_view(), name="signup"),
 ]
