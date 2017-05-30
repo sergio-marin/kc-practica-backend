@@ -11,6 +11,6 @@ class BlogViewSet(ListModelMixin, GenericViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogListSerializer
     filter_backends = (SearchFilter, OrderingFilter)
-    search_fields = "blogger__username"
-    ordering_fields = "name"
+    search_fields = ("blogger__username",)
+    ordering_fields = ("name",)
 
