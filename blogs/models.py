@@ -12,7 +12,7 @@ class Blog(models.Model):
 
     def get_absolute_url(self):
         """
-        Devuelve la url de un blog según su .
+        Devuelve la url de un blog
         :return: string
         """
         return reverse('blog_detail', args=[self.blogger.username])
