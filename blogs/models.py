@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
@@ -8,6 +9,13 @@ class Blog(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=350, null=True, blank=True, default="")
     creation_date = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        """
+        Devuelve la url de un blog según su .
+        :return: string
+        """
+        return reverse('blog_detail', args=[self.blogger.username])
 
     def __str__(self):
         return self.name

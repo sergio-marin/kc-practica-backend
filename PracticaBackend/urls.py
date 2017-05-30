@@ -17,12 +17,14 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 
+from blogs.api import BlogViewSet
 from blogs.views import posts_list, blogs_list, blog_detail, post_detail, NewPostView
 from users.api import UserViewSet
 from users.views import LoginView, logout, SignupView
 
 router = DefaultRouter()
 router.register("users", UserViewSet, base_name="users_api")
+router.register("blogs", BlogViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
