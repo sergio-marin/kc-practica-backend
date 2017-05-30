@@ -16,7 +16,7 @@ class UserPermission(BasePermission):
             return True
 
         # cualquiera autenticado puede acceder al detalle para ver, actualizar o borrar
-        if request.user.is_authenticated() and view.action in ("retrieve", "update", "partial_update"):
+        if request.user.is_authenticated() and view.action in ("retrieve", "update", "partial_update", "destroy"):
             return True
 
         return False
