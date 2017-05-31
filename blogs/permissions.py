@@ -16,7 +16,7 @@ class PostsPermissions(BasePermission):
             return True
 
         # cualquiera autenticado puede crear, acceder al detalle, actualizar o borrar sus propios posts
-        if request.user.is_authenticated() and view.action in ("update", "partial_update", "destroy"):
+        if request.user.is_authenticated() and view.action in ("create", "update", "partial_update", "destroy"):
             return True
 
         return False

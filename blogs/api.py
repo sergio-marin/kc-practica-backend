@@ -47,3 +47,7 @@ class PostViewSet(ModelViewSet):
         # finalmente devolvemos todos los posts del blogger en particular
         else:
             return self.queryset.filter(blog=self.request.user.blog)
+
+    def perform_create(self, serializer):
+        serializer.save(blog=self.request.user.blog)
+        return serializer

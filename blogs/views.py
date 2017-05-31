@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import View
 
@@ -11,12 +12,12 @@ from blogs.models import Post, Blog
 
 def posts_list(request):
     """
-    Recupera todos los posts de BD y los pinta en la página principal
+    Recupera todos los posts publicados de BD y los pinta en la página principal
     :param request: HttpRequest
     :return: HttpResponse
     """
     # recuperar todos los posts de la bd
-    posts = Post.objects.all().order_by('-published_date')
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
 
     # devolver la respuesta
     context = {
