@@ -61,7 +61,7 @@ def blog_detail(request, blogger_name):
     except Blog.MultipleObjectsReturned:
         return HttpResponse("More than one blog owned by the user.", status=300)
 
-    posts = Post.objects.filter(blog=blog.pk).order_by('-published_date')
+    posts = Post.objects.filter(blog=blog.pk).filter(published_date__lte=timezone.now()).order_by('-published_date')
 
     # preparar el contexto
     context = {
