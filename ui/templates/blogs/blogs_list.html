@@ -5,6 +5,8 @@
     </div>
 
     {% for blog in blog_objects %}
-        <h2>{{ blog.name }}</h2>
+        <a href="{% url 'blog_detail' blog.blogger.username %}">
+            <h2>{{ blog.name }}</h2>
+        </a>
     {% endfor %}
 {% endblock %}

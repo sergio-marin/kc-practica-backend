@@ -82,8 +82,9 @@ def post_detail(request, blogger_name, post_pk):
     """
     # recuperar el post
     try:
-        post = Post.objects.get(pk=post_pk)
-    except Post.DoesNotExist:
+        blog = Blog.objects.filter(blogger__username=blogger_name).get()
+        post = Post.objects.filter(blog__id=blog.pk).get(pk=post_pk)
+    except Blog.DoesNotExist or Post.DoesNotExist:
         return render(request, '404.html', {}, status=404)
 
     # preparar el contexto
