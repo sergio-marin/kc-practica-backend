@@ -12,6 +12,8 @@ class SignupForm(UserCreationForm):
     first_name = forms.CharField(required=False, help_text='Optional.')
     last_name = forms.CharField(required=False, help_text='Optional.')
     email = forms.EmailField(help_text='Required.')
+    blog_name = forms.CharField(help_text='Required.')
+    blog_description = forms.CharField(help_text='Required.')
 
     class Meta:
             model = User

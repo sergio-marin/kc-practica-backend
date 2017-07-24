@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
 
+from blogs.models import Blog
 from users.forms import LoginForm, SignupForm
 
 
@@ -55,6 +56,9 @@ def logout(request):
 
 class SignupView(View):
 
+    def get_blog_object(self, user):
+        return Blog(blogger=user)
+
     def get(self, request):
         """
         Muestra el formulario de registro
@@ -74,11 +78,14 @@ class SignupView(View):
         """
         # crear el formulario con los datos del POST
         form = SignupForm(request.POST)
-
-        # validar el formulario
         if form.is_valid():
-            # crear el usuario
-            form.save()
+            user = form.save()
+
+            # Updating user blog info
+            blog = self.get_blog_object(user)
+            blog.name = form.cleaned_data.get('blog_name')
+            blog.description = form.cleaned_data.get('blog_description')
+            blog.save()
 
             # enviar a página de bienvenida
             return render(request, 'users/signup_succes.html')
